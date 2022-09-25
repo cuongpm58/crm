@@ -18,10 +18,11 @@ public class RoleRepository extends AbstractRepository<RoleModel> {
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                RoleModel roleModel = new RoleModel();
-                roleModel.setId(resultSet.getInt("id"));
-                roleModel.setName(resultSet.getString("name"));
-                roleModel.setDescription(resultSet.getString("description"));
+                RoleModel roleModel = RoleModel.builder()
+                        .id(resultSet.getInt("id"))
+                        .name(resultSet.getString("name"))
+                        .description(resultSet.getString("description"))
+                        .build();
 
                 roleModels.add(roleModel);
             }

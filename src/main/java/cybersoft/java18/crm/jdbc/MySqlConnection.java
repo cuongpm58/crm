@@ -5,9 +5,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class MySqlConnection {
-    private static final String URL = "jdbc:mysql://localhost:3307/crm_app";
+    private static final String URL = "jdbc:mysql://localhost:3308/crm_app";
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "admin";
+    private static final String PASSWORD = "1234";
     public static Connection getConnection() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
