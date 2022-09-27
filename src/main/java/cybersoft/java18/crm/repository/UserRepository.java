@@ -36,7 +36,7 @@ public class UserRepository extends AbstractRepository<UserModel> {
     }
 
 
-    public UserModel findByMail(String mail) {
+    public UserModel findByEmail(String mail) {
         final String query = """
                 select *
                 from users u inner join roles r on u.role_id = r.id

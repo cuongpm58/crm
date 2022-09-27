@@ -40,6 +40,18 @@ public class UserService {
         return repository.updateUser(userModel);
     }
 
+    public UserModel login(String email, String password) {
+        UserModel user = repository.findByEmail(email);
+
+        if (user == null)
+            return null;
+
+        if (user.getPassword().equals(password))
+            return user;
+
+        return null;
+    }
+
     private boolean isValidUser(UserModel userModel) {
         if (userModel.getEmail() == null || "".equals(userModel.getEmail().trim()))
             return false;
