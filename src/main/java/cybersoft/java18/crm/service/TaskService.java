@@ -23,4 +23,8 @@ public class TaskService {
     public boolean addTask(TaskModel newTask) {
         return repository.save(newTask);
     }
+
+    public List<TaskModel> getTaskByUserIdStatusId(int userId, int statusId) {
+        return repository.findTaskByUserIdStatusId(userId, statusId);
+    }
 }

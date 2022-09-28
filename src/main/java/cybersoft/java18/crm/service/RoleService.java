@@ -29,4 +29,8 @@ public class RoleService {
     public Integer updateRoleById(RoleModel roleModel){
         return  roleRepository.updateRole(roleModel);
     }
+
+    public RoleModel getRoleByEmail(String email) {
+        return roleRepository.findRoleByEmail(email);
+    }
 }

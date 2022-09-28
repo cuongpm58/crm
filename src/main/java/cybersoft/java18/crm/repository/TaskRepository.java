@@ -1,6 +1,5 @@
 package cybersoft.java18.crm.repository;
 
-import cybersoft.java18.crm.model.StatusModel;
 import cybersoft.java18.crm.model.TaskModel;
 
 import java.sql.Date;
@@ -46,5 +45,27 @@ public class TaskRepository extends AbstractRepository<TaskModel> {
             statement.setInt(6, newTask.getStatusId());
             return statement.executeUpdate();
         }) != 0;
+    }
+
+    public List<TaskModel> findTaskByUserIdStatusId(int userId, int statusId) {
+        String query = """
+                    select * from tasks
+                    where user_id = ? and status_id=?
+                """;
+        return executeQuery(connection -> {
+            List<TaskModel> tasks = new ArrayList<>();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, userId);
+            statement.setInt(2, statusId);
+            ResultSet results = statement.executeQuery();
+            while (results.next()) {
+                tasks.add(TaskModel.builder()
+                                .name(results.getString("name"))
+                                .startTime(results.getDate("start_date").toLocalDate().atStartOfDay())
+                                .startTime(results.getDate("end_date").toLocalDate().atStartOfDay())
+                        .build());
+            }
+            return tasks;
+        });
     }
 }

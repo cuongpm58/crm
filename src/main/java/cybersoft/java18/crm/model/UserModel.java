@@ -10,6 +10,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Builder
 public class UserModel {
+    private transient int id;
     private String email;
     private String password;
     private String fullname;

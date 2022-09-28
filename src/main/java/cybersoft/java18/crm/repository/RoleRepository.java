@@ -49,4 +49,25 @@ public class RoleRepository extends AbstractRepository<RoleModel> {
             return statement.executeUpdate();
         }));
     }
+
+    public RoleModel findRoleByEmail(String email) {
+        String query = """
+                    SELECT r.id, r.name, r.description FROM users u inner join roles r on r.id = u.role_id WHERE email = ?;
+                """;
+        return executeQuerySingle(connection -> {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, email);
+            ResultSet result = statement.executeQuery();
+            if(result.next()) {
+                return RoleModel.builder()
+                        .id(result.getInt("id"))
+                        .name(result.getString("name"))
+                        .description(result.getString("description"))
+                        .build();
+            } else {
+                return null;
+            }
+
+        });
+    }
 }

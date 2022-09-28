@@ -23,12 +23,13 @@ public class RoleController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<RoleModel> listRoles =  RoleService.getInstance().getAllRole();
 
-        String json = gson.toJson(listRoles);
-        PrintWriter printWriter = resp.getWriter();
-        printWriter.print(json);
-        printWriter.flush();
+//        List<RoleModel> listRoles =  RoleService.getInstance().getAllRole();
+//
+//        String json = gson.toJson(listRoles);
+//        PrintWriter printWriter = resp.getWriter();
+//        printWriter.print(json);
+//        printWriter.flush();
     }
 
     @Override

@@ -19,6 +19,7 @@ public class UserRepository extends AbstractRepository<UserModel> {
             ResultSet result = statement.executeQuery();
             while(result.next()) {
                 UserModel user = UserModel.builder()
+                        .id(result.getInt("id"))
                         .email(result.getString("email"))
                         .password(result.getString("password"))
                         .fullname(result.getString("fullname"))
@@ -48,6 +49,7 @@ public class UserRepository extends AbstractRepository<UserModel> {
             ResultSet resultSet = statement.executeQuery();
             if(resultSet.next()) {
                 return new UserModel(
+                        resultSet.getInt("id"),
                         resultSet.getString("email"),
                         resultSet.getString("password"),
                         resultSet.getString("fullname"),
