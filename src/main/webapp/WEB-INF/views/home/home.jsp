@@ -11,34 +11,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" type="image/png" sizes="16x16" href="../plugins/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="<c:url value="resources/plugins/images/favicon.png"/>">
     <title>Pixel Admin</title>
+    <link rel="stylesheet" href="<c:url value="/resources/css/style.css"/>">
+    <link rel="stylesheet" href="<c:url value="/resources/css/colors/blue-dark.css"/>">
+    <link rel="stylesheet" href="<c:url value="/resources/css/custom.css"/>">
+    <link rel="stylesheet" href="<c:url value="/resources/bootstrap/dist/css/bootstrap.min.css"/>">
+    <link rel="stylesheet" href="<c:url value="/resources/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css"/>">
+    <link rel="stylesheet" href="<c:url value="/resources/plugins/bower_components/toast-master/css/jquery.toast.css"/>">
+    <link rel="stylesheet" href="<c:url value="/resources/plugins/bower_components/morrisjs/morris.css"/>">
+    <link rel="stylesheet" href="<c:url value="/resources/css/animate.css"/>">
 
-    <style>
-    <%@include file="/resources/bootstrap/dist/css/bootstrap.min.css"%>
-    <%@include file="/resources/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css"%>
-    <%@include file="/resources/plugins/bower_components/toast-master/css/jquery.toast.css"%>
-    <%@include file="/resources/plugins/bower_components/morrisjs/morris.css"%>
-    <%@include file="/resources/css/animate.css"%>
-    <%@include file="/resources/css/style.css"%>
-    <%@include file="/resources/css/colors/blue-dark.css"%>
-    <%@include file="/resources/css/custom.css"%>
-    </style>
 
+    <script src="<c:url value="/resources/plugins/bower_components/jquery/dist/jquery.min.js"/>"></script>
+    <script src="<c:url value="/resources/bootstrap/dist/js/bootstrap.min.js"/>"></script>
+    <script src="<c:url value="/resources/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js"/>"></script>
+    <script src="<c:url value="/resources/js/jquery.slimscroll.js"/>"></script>
+    <script src="<c:url value="/resources/js/waves.js"/>"></script>
+    <script src="<c:url value="/resources/plugins/bower_components/waypoints/lib/jquery.waypoints.js"/>"></script>
+    <script src="<c:url value="/resources/plugins/bower_components/counterup/jquery.counterup.min.js"/>"></script>
+    <script src="<c:url value="/resources/plugins/bower_components/raphael/raphael-min.js"/>"></script>
+    <script src="<c:url value="/resources/plugins/bower_components/morrisjs/morris.js"/>"></script>
+    <script src="<c:url value="/resources/js/custom.min.js"/>"></script>
+    <script src="<c:url value="/resources/js/dashboard1.js"/>"></script>
+    <script src="<c:url value="/resources/css/custom.css"/>"></script>
+    <script src="<c:url value="/resources/plugins/bower_components/toast-master/js/jquery.toast.js"/>"></script>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+
 </head>
-<script>
-    var ctx = "${pageContext.request.contextPath}"
-    console.log('contextpath', ctx)
+<script type="text/javascript">
+    $(document).ready(function() {
+        console.log('ready')
+        $(".preloader").css("display", "none");
+    })
 </script>
 
 <body>
 <!-- Preloader -->
+
 <div class="preloader">
     <div class="cssload-speeding-wheel"></div>
 </div>
+
 <div id="wrapper">
     <!-- Navigation -->
     <nav class="navbar navbar-default navbar-static-top m-b-0">
@@ -49,10 +64,10 @@
             <div class="top-left-part">
                 <a class="logo" href="index.html">
                     <b>
-                        <img src="${pageContext.request.contextPath}/resources/plugins/images/pixeladmin-logo.png" alt="home" />
+                        <img src="<c:url value="/resources/plugins/images/pixeladmin-logo.png"/>" alt="home" />
                     </b>
                     <span class="hidden-xs">
-                            <img src="${pageContext.request.contextPath}/resources/plugins/images/pixeladmin-text.png" alt="home" />
+                            <img src="<c:url value="/resources/plugins/images/pixeladmin-text.png"/>" alt="home" />
                         </span>
                 </a>
             </div>
@@ -70,7 +85,7 @@
                 <li>
                     <div class="dropdown">
                         <a class="profile-pic dropdown-toggle" data-toggle="dropdown" href="#">
-                            <img src="${pageContext.request.contextPath}/styles/plugins/images/users/varun.jpg" alt="user-img" width="36" class="img-circle" />
+                            <img src="<c:url value="/resources/plugins/images/users/varun.jpg"/>" alt="user-img" width="36" class="img-circle" />
                             <b class="hidden-xs">Cybersoft</b>
                         </a>
                         <ul class="dropdown-menu">
@@ -225,20 +240,7 @@
     <footer class="footer text-center"> 2018 &copy; myclass.com </footer>
 </div>
 </div>
-<style>
-<%@include file="/resources/plugins/bower_components/jquery/dist/jquery.min.js"%>
-<%@include file="/resources/bootstrap/dist/js/bootstrap.min.js"%>
-<%@include file="/resources/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js"%>
-<%@include file="/resources/js/jquery.slimscroll.js"%>
-<%@include file="/resources/js/waves.js"%>
-<%@include file="/resources/plugins/bower_components/waypoints/lib/jquery.waypoints.js"%>
-<%@include file="/resources/plugins/bower_components/counterup/jquery.counterup.min.js"%>
-<%@include file="/resources/plugins/bower_components/raphael/raphael-min.js"%>
-<%@include file="/resources/plugins/bower_components/morrisjs/morris.js"%>
-<%@include file="/resources/js/custom.min.js"%>
-<%@include file="/resources/js/dashboard1.js"%>
-<%@include file="/resources/plugins/bower_components/toast-master/js/jquery.toast.js"%>
-</style>
+
 
 </body>
 
