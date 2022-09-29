@@ -32,19 +32,30 @@ public class UserController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UserModel user = (UserModel) req.getSession().getAttribute("currentUser");
-        switch (req.getServletPath()){
+        switch (req.getServletPath()) {
             case UrlUtil.URL_USER_PROFILE -> showUserProfile(req, resp, user);
             default -> showUserTable(req, resp, user);
         }
     }
 
     private void showUserProfile(HttpServletRequest req, HttpServletResponse resp, UserModel user) throws ServletException, IOException {
-        List<TaskModel> listTasks = TaskService.getInstance().getTaskByUserId(user.getId());
-        int sumTask = 0;
+        List<TaskModel> tasks = TaskService.getInstance().getTaskByUserId(user.getId());
+        int sumTask = tasks.size();
 
         List<Integer> listPercentTask = new ArrayList<Integer>();
+        if (sumTask > 0) {
+            for (StatusModel statusModel : status) {
+                long count = tasks.stream()
+                        .filter(task -> task.getStatusName().equals(statusModel.getName())).count();
+                listPercentTask.add((int) (count * 100 / sumTask));
+            }
+        } else {
+            for (StatusModel statusModel : status) {
+                listPercentTask.add(0);
+            }
+        }
 
-
+        req.setAttribute("tasks", tasks);
         req.setAttribute("listPercentTask", listPercentTask);
         req.setAttribute("user", user);
         req.getRequestDispatcher(JspUtil.JSP_USER_PROFILE).forward(req, resp);
@@ -76,7 +87,7 @@ public class UserController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        switch (req.getServletPath()){
+        switch (req.getServletPath()) {
             case UrlUtil.URL_USER_ADD -> addUser(req, resp);
             default -> getUsers(req, resp);
         }
@@ -107,7 +118,7 @@ public class UserController extends HttpServlet {
         UserService.getInstance().updateUser(user);
     }
 
-    private void getUsers(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+    private void getUsers(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<UserModel> users = UserService.getInstance().getUsers();
         PrintUtil.printJsonFromObject(resp, users);
     }

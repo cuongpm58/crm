@@ -14,8 +14,8 @@ public class TaskModel {
     private LocalDateTime endTime;
     private String jobName;
     private String personInCharge;
+    private String statusName;
     private transient int userId;
     private transient int jobId;
     private transient int statusId;
-    private String statusName;
 }

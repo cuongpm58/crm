@@ -72,13 +72,13 @@
                             <a class="profile-pic dropdown-toggle" data-toggle="dropdown" href="#">
                                 <img src="${pageContext.request.contextPath}/resources/plugins/images/users/varun.jpg" alt="user-img" width="36"
                                     class="img-circle" />
-                                <b class="hidden-xs">Cybersoft</b>
+                                <b class="hidden-xs">${sessionScope.currentUser.fullname}</b>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="profile.html">Thông tin cá nhân</a></li>
+                                <li><a href="<%=request.getContextPath() + UrlUtil.URL_USER_PROFILE %>">Thông tin cá nhân</a></li>
                                 <li><a href="#">Thống kê công việc</a></li>
                                 <li class="divider"></li>
-                                <li><a href="#">Đăng xuất</a></li>
+                                <li><a href="<%=request.getContextPath() + UrlUtil.URL_LOGOUT %>">Đăng xuất</a></li>
                             </ul>
                         </div>
                     </li>
@@ -93,31 +93,31 @@
             <div class="sidebar-nav navbar-collapse slimscrollsidebar">
                 <ul class="nav" id="side-menu">
                     <li style="padding: 10px 0 0;">
-                        <a href="index.html" class="waves-effect"><i class="fa fa-clock-o fa-fw"
+                        <a href="<%=request.getContextPath() + UrlUtil.URL_HOME %>" class="waves-effect"><i class="fa fa-clock-o fa-fw"
                                 aria-hidden="true"></i><span class="hide-menu">Dashboard</span></a>
                     </li>
                     <li>
-                        <a href="user-table.html" class="waves-effect"><i class="fa fa-user fa-fw"
+                        <a href="<%=request.getContextPath() + UrlUtil.URL_USER %>" class="waves-effect"><i class="fa fa-user fa-fw"
                                 aria-hidden="true"></i><span class="hide-menu">Thành viên</span></a>
                     </li>
                     <li>
-                        <a href="role-table.html" class="waves-effect"><i class="fa fa-modx fa-fw"
+                        <a href="<%=request.getContextPath() + UrlUtil.URL_ROLE %>" class="waves-effect"><i class="fa fa-modx fa-fw"
                                 aria-hidden="true"></i><span class="hide-menu">Quyền</span></a>
                     </li>
                     <li>
-                        <a href="groupwork.html" class="waves-effect"><i class="fa fa-table fa-fw"
+                        <a href="<%=request.getContextPath() + UrlUtil.URL_JOB %>" class="waves-effect"><i class="fa fa-table fa-fw"
                                 aria-hidden="true"></i><span class="hide-menu">Dự án</span></a>
                     </li>
                     <li>
-                        <a href="task.html" class="waves-effect"><i class="fa fa-table fa-fw"
+                        <a href="<%=request.getContextPath() + UrlUtil.URL_TASK %>" class="waves-effect"><i class="fa fa-table fa-fw"
                                 aria-hidden="true"></i><span class="hide-menu">Công việc</span></a>
                     </li>
                     <li>
-                        <a href="blank.html" class="waves-effect"><i class="fa fa-columns fa-fw"
+                        <a href="<%=request.getContextPath() + UrlUtil.URL_BLANK %>" class="waves-effect"><i class="fa fa-columns fa-fw"
                                 aria-hidden="true"></i><span class="hide-menu">Blank Page</span></a>
                     </li>
                     <li>
-                        <a href="404.html" class="waves-effect"><i class="fa fa-info-circle fa-fw"
+                        <a href="<%=request.getContextPath() + UrlUtil.URL_ERROR %>" class="waves-effect"><i class="fa fa-info-circle fa-fw"
                                 aria-hidden="true"></i><span class="hide-menu">Error 404</span></a>
                     </li>
                 </ul>
@@ -244,28 +244,22 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Phân tích dự án</td>
-                                            <td>Dự án CRM</td>
-                                            <td>22/05/2019</td>
-                                            <td>30/05/2019</td>
-                                            <td>Đã hoàn thành</td>
-                                            <td>
-                                                <a href="profile-edit.html" class="btn btn-sm btn-primary">Cập nhật</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Thiết kế database</td>
-                                            <td>Dự án CRM</td>
-                                            <td>22/05/2019</td>
-                                            <td>30/05/2019</td>
-                                            <td>Đang thực hiện</td>
-                                            <td>
-                                                <a href="profile-edit.html" class="btn btn-sm btn-primary">Cập nhật</a>
-                                            </td>
-                                        </tr>
+                                        <c:forEach var="task" items="${tasks}" varStatus="loop">
+                                             <tr>
+                                                 <td>${loop.index + 1}</td>
+                                                 <td>${task.name}</td>
+                                                 <td>${task.jobName}</td>
+                                                 <td>${task.personInCharge}</td>
+                                                 <td>${task.startTime}</td>
+                                                 <td>${task.endTime}</td>
+                                                 <td>${task.statusName}</td>
+                                                 <td>
+                                                     <a href="#" class="btn btn-sm btn-primary">Sửa</a>
+                                                     <a href="#" class="btn btn-sm btn-danger">Xóa</a>
+                                                     <a href="user-details.html" class="btn btn-sm btn-info">Xem</a>
+                                                 </td>
+                                             </tr>
+                                        </c:forEach>
                                     </tbody>
                                 </table>
                             </div>

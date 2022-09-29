@@ -75,7 +75,7 @@
                                     <b class="hidden-xs">${sessionScope.currentUser.fullname}</b>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="profile.html">Thông tin cá nhân</a></li>
+                                    <li><a href="<%=request.getContextPath() + UrlUtil.URL_USER_PROFILE %>">Thông tin cá nhân</a></li>
                                     <li><a href="#">Thống kê công việc</a></li>
                                     <li class="divider"></li>
                                     <li><a href="<%=request.getContextPath() + UrlUtil.URL_LOGOUT %>">Đăng xuất</a></li>

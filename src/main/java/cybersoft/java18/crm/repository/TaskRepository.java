@@ -53,7 +53,10 @@ public class TaskRepository extends AbstractRepository<TaskModel> {
 
     public List<TaskModel> findTaskByUserIdStatusId(int userId, int statusId) {
         String query = """
-                    select * from tasks
+                    select t.name, t.start_date, t.end_date, s.name, u.fullname, j.name from tasks t
+                    inner join status s on t.status_id = s.id
+                    inner join users u on t.user_id = u.id
+                    inner join jobs j on t.job_id = j.id
                     where user_id = ? and status_id=?
                 """;
         return executeQuery(connection -> {
@@ -75,7 +78,11 @@ public class TaskRepository extends AbstractRepository<TaskModel> {
 
     public List<TaskModel> findTaskByUserId(int userId) {
         String query = """
-                    select * from task where user_id = ?
+                    select t.name, t.start_date, t.end_date, s.name, u.fullname, j.name from tasks t
+                    inner join status s on t.status_id = s.id
+                    inner join users u on t.user_id = u.id
+                    inner join jobs j on t.job_id = j.id
+                    where user_id = ?
                 """;
         return executeQuery(connection -> {
             List<TaskModel> tasks = new ArrayList<>();
@@ -86,7 +93,10 @@ public class TaskRepository extends AbstractRepository<TaskModel> {
                 tasks.add(TaskModel.builder()
                         .name(results.getString("name"))
                         .startTime(results.getDate("start_date").toLocalDate().atStartOfDay())
-                        .startTime(results.getDate("end_date").toLocalDate().atStartOfDay())
+                        .endTime(results.getDate("end_date").toLocalDate().atStartOfDay())
+                        .statusName(results.getString("s.name"))
+                        .personInCharge(results.getString("u.fullname"))
+                        .jobName(results.getString("j.name"))
                         .build());
             }
             return tasks;

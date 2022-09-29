@@ -72,13 +72,13 @@
                             <div class="dropdown">
                                 <a class="profile-pic dropdown-toggle" data-toggle="dropdown" href="#"> 
                                     <img src="${pageContext.request.contextPath}/resources/plugins/images/users/varun.jpg" alt="user-img" width="36" class="img-circle" />
-                                    <b class="hidden-xs">Cybersoft</b> 
+                                    <b class="hidden-xs">${sessionScope.currentUser.fullname}</b>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="profile.html">Thông tin cá nhân</a></li>
+                                    <li><a href="<%=request.getContextPath() + UrlUtil.URL_USER_PROFILE %>">Thông tin cá nhân</a></li>
                                     <li><a href="#">Thống kê công việc</a></li>
                                     <li class="divider"></li>
-                                    <li><a href="#">Đăng xuất</a></li>
+                                    <li><a href="<%=request.getContextPath() + UrlUtil.URL_LOGOUT %>">Đăng xuất</a></li>
                                 </ul>
                             </div>
                         </li>

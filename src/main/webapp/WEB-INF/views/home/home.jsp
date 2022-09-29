@@ -149,13 +149,13 @@
                                 <h5 class="text-muted vb">CHƯA BẮT ĐẦU</h5>
                             </div>
                             <div class="col-md-6 col-sm-6 col-xs-6">
-                                <h3 class="counter text-right m-t-15 text-danger">${todoTask.size()}</h3>
+                                <h3 class="counter text-right m-t-15 text-danger">${listPercentTask[0]}</h3>
                             </div>
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="progress">
-                                    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="40"
-                                        aria-valuemin="0" aria-valuemax="100" style="width: 40%"> <span
-                                            class="sr-only">40% Complete (success)</span> </div>
+                                    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="${listPercentTask[0]}"
+                                        aria-valuemin="0" aria-valuemax="100" style="width: ${listPercentTask[0]}%"> <span
+                                            class="sr-only">${listPercentTask[0]}% Complete (success)</span> </div>
                                 </div>
                             </div>
                         </div>
@@ -171,13 +171,13 @@
                                 <h5 class="text-muted vb">ĐANG THỰC HIỆN</h5>
                             </div>
                             <div class="col-md-6 col-sm-6 col-xs-6">
-                                <h3 class="counter text-right m-t-15 text-megna">${inProgressTask.size()}</h3>
+                                <h3 class="counter text-right m-t-15 text-megna">${listPercentTask[1]}</h3>
                             </div>
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="progress">
-                                    <div class="progress-bar progress-bar-megna" role="progressbar" aria-valuenow="40"
-                                        aria-valuemin="0" aria-valuemax="100" style="width: 40%"> <span
-                                            class="sr-only">40% Complete (success)</span> </div>
+                                    <div class="progress-bar progress-bar-megna" role="progressbar" aria-valuenow="${listPercentTask[1]}"
+                                        aria-valuemin="0" aria-valuemax="100" style="width: ${listPercentTask[1]}%"> <span
+                                            class="sr-only">${listPercentTask[1]}% Complete (success)</span> </div>
                                 </div>
                             </div>
                         </div>
@@ -193,13 +193,13 @@
                                 <h5 class="text-muted vb">ĐÃ HOÀN THÀNH</h5>
                             </div>
                             <div class="col-md-6 col-sm-6 col-xs-6">
-                                <h3 class="counter text-right m-t-15 text-primary">${completedTask.size()}</h3>
+                                <h3 class="counter text-right m-t-15 text-primary">${listPercentTask[2]}</h3>
                             </div>
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="progress">
-                                    <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="40"
-                                        aria-valuemin="0" aria-valuemax="100" style="width: 40%"> <span
-                                            class="sr-only">40% Complete (success)</span> </div>
+                                    <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="${listPercentTask[2]}"
+                                        aria-valuemin="0" aria-valuemax="100" style="width: ${listPercentTask[2]}%"> <span
+                                            class="sr-only">${listPercentTask[2]}% Complete (success)</span> </div>
                                 </div>
                             </div>
                         </div>
