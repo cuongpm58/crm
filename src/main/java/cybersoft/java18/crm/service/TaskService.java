@@ -16,7 +16,7 @@ public class TaskService {
         return INSTANCE;
     }
 
-    public List<TaskModel> getTasks() {
+    public List<TaskModel> getAllTasks() {
         return repository.findAll();
     }
 
