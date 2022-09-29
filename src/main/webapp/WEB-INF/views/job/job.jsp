@@ -93,19 +93,19 @@
             <div class="sidebar-nav navbar-collapse slimscrollsidebar">
                 <ul class="nav" id="side-menu">
                     <li style="padding: 10px 0 0;">
-                        <a href="index.html" class="waves-effect"><i class="fa fa-clock-o fa-fw"
+                        <a href="<%=request.getContextPath() + UrlUtil.URL_HOME %>" class="waves-effect"><i class="fa fa-clock-o fa-fw"
                                 aria-hidden="true"></i><span class="hide-menu">Dashboard</span></a>
                     </li>
                     <li>
-                        <a href="user-table.html" class="waves-effect"><i class="fa fa-user fa-fw"
+                        <a href="<%=request.getContextPath() + UrlUtil.URL_USER %>" class="waves-effect"><i class="fa fa-user fa-fw"
                                 aria-hidden="true"></i><span class="hide-menu">Thành viên</span></a>
                     </li>
                     <li>
-                        <a href="role-table.html" class="waves-effect"><i class="fa fa-modx fa-fw"
+                        <a href="<%=request.getContextPath() + UrlUtil.URL_ROLE %>" class="waves-effect"><i class="fa fa-modx fa-fw"
                                 aria-hidden="true"></i><span class="hide-menu">Quyền</span></a>
                     </li>
                     <li>
-                        <a href="groupwork.html" class="waves-effect"><i class="fa fa-table fa-fw"
+                        <a href="<%=request.getContextPath() + UrlUtil.URL_JOB %>" class="waves-effect"><i class="fa fa-table fa-fw"
                                 aria-hidden="true"></i><span class="hide-menu">Dự án</span></a>
                     </li>
                     <li>
@@ -152,28 +152,19 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Phân tích dự án</td>
-                                            <td>22/05/2019</td>
-                                            <td>30/05/2019</td>
-                                            <td>
-                                                <a href="#" class="btn btn-sm btn-primary">Sửa</a>
-                                                <a href="#" class="btn btn-sm btn-danger">Xóa</a>
-                                                <a href="groupwork-details.html" class="btn btn-sm btn-info">Xem</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Thiết kế hệ thống</td>
-                                            <td>22/05/2019</td>
-                                            <td>30/05/2019</td>
-                                            <td>
-                                                <a href="#" class="btn btn-sm btn-primary">Sửa</a>
-                                                <a href="#" class="btn btn-sm btn-danger">Xóa</a>
-                                                <a href="groupwork-details.html" class="btn btn-sm btn-info">Xem</a>
-                                            </td>
-                                        </tr>
+                                        <c:forEach var="job" items="${jobs}" varStatus="loop">
+                                             <tr>
+                                                 <td>${loop.index + 1}</td>
+                                                 <td>${job.name}</td>
+                                                 <td>${job.startTime}</td>
+                                                 <td>${job.endTime}</td>
+                                                 <td>
+                                                     <a href="#" class="btn btn-sm btn-primary">Sửa</a>
+                                                     <a href="#" class="btn btn-sm btn-danger">Xóa</a>
+                                                     <a href="user-details.html" class="btn btn-sm btn-info">Xem</a>
+                                                 </td>
+                                             </tr>
+                                         </c:forEach>
                                     </tbody>
                                 </table>
                             </div>

@@ -2,9 +2,13 @@ package cybersoft.java18.crm.api;
 
 import cybersoft.java18.crm.model.JobModel;
 import cybersoft.java18.crm.model.TaskModel;
+import cybersoft.java18.crm.model.UserModel;
 import cybersoft.java18.crm.service.JobService;
 import cybersoft.java18.crm.service.TaskService;
+import cybersoft.java18.crm.service.UserService;
+import cybersoft.java18.crm.util.JspUtil;
 import cybersoft.java18.crm.util.PrintUtil;
+import cybersoft.java18.crm.util.RoleUtil;
 import cybersoft.java18.crm.util.UrlUtil;
 
 import javax.servlet.ServletException;
@@ -23,7 +27,12 @@ import java.util.List;
 public class JobController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        getAllJob(req, resp);
+        UserModel user = (UserModel) req.getSession().getAttribute("currentUser");
+        switch (user.getRole().getName()) {
+            case RoleUtil.ROLE_ADMIN -> showAllJob(req, resp);
+            case RoleUtil.ROLE_MANAGER -> showManagedJob(req, resp);
+            default -> showNothing(req, resp);
+        }
     }
 
     @Override
@@ -32,6 +41,19 @@ public class JobController extends HttpServlet {
             case UrlUtil.URL_JOB_ADD -> addNewJob(req, resp);
             default -> getAllJob(req, resp);
         }
+    }
+
+    private void showNothing(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    }
+
+    private void showManagedJob(HttpServletRequest req, HttpServletResponse resp) {
+
+    }
+
+    private void showAllJob(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        List<JobModel> jobs = JobService.getInstance().getAllJob();
+        req.setAttribute("jobs", jobs);
+        req.getRequestDispatcher(JspUtil.JSP_JOB).forward(req, resp);
     }
 
     private void addNewJob(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
