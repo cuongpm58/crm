@@ -27,4 +27,8 @@ public class TaskService {
     public List<TaskModel> getTaskByUserIdStatusId(int userId, int statusId) {
         return repository.findTaskByUserIdStatusId(userId, statusId);
     }
+
+    public List<TaskModel> getTaskByUserId(int userId) {
+        return repository.findTaskByUserId(userId);
+    }
 }

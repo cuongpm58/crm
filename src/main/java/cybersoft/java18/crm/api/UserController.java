@@ -1,9 +1,7 @@
 package cybersoft.java18.crm.api;
 
-import cybersoft.java18.crm.model.RoleModel;
-import cybersoft.java18.crm.model.UserModel;
-import cybersoft.java18.crm.service.RoleService;
-import cybersoft.java18.crm.service.UserService;
+import cybersoft.java18.crm.model.*;
+import cybersoft.java18.crm.service.*;
 import cybersoft.java18.crm.util.JspUtil;
 import cybersoft.java18.crm.util.PrintUtil;
 import cybersoft.java18.crm.util.RoleUtil;
@@ -15,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "user", urlPatterns = {
@@ -22,23 +21,41 @@ import java.util.List;
         UrlUtil.URL_USER_DETAIL,
         UrlUtil.URL_USER_MODIFY,
         UrlUtil.URL_USER_DELETE,
-        UrlUtil.URL_USER_ADD
+        UrlUtil.URL_USER_ADD,
+        UrlUtil.URL_USER_PROFILE
 })
 
 public class UserController extends HttpServlet {
     private List<RoleModel> roles = RoleService.getInstance().getAllRole();
-
+    private List<StatusModel> status = StatusService.getInstance().getAllStatus();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UserModel user = (UserModel) req.getSession().getAttribute("currentUser");
+        switch (req.getServletPath()){
+            case UrlUtil.URL_USER_PROFILE -> showUserProfile(req, resp, user);
+            default -> showUserTable(req, resp, user);
+        }
+    }
+
+    private void showUserProfile(HttpServletRequest req, HttpServletResponse resp, UserModel user) throws ServletException, IOException {
+        List<TaskModel> listTasks = TaskService.getInstance().getTaskByUserId(user.getId());
+        int sumTask = 0;
+
+        List<Integer> listPercentTask = new ArrayList<Integer>();
+
+
+        req.setAttribute("listPercentTask", listPercentTask);
+        req.setAttribute("user", user);
+        req.getRequestDispatcher(JspUtil.JSP_USER_PROFILE).forward(req, resp);
+    }
+
+    private void showUserTable(HttpServletRequest req, HttpServletResponse resp, UserModel user) throws ServletException, IOException {
         switch (user.getRole().getName()) {
             case RoleUtil.ROLE_ADMIN -> showAllMember(req, resp);
             case RoleUtil.ROLE_MANAGER -> showSubordinate(req, resp);
             default -> showNothing(req, resp);
         }
-//        getUsers(req, resp);
-
     }
 
     private void showSubordinate(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

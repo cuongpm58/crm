@@ -16,7 +16,10 @@ public class StatusRepository extends AbstractRepository<StatusModel> {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
 
-                statusModels.add(new StatusModel(resultSet.getString("name")));
+                statusModels.add(StatusModel.builder()
+                        .id(resultSet.getInt("id"))
+                        .name(resultSet.getString("name"))
+                        .build());
             }
             return statusModels;
         }));

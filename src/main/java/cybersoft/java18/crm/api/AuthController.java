@@ -13,12 +13,19 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(name = "auth", urlPatterns = {
-        UrlUtil.URL_LOGIN
+        UrlUtil.URL_LOGIN,
+        UrlUtil.URL_LOGOUT
 })
 public class AuthController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher(JspUtil.JSP_LOGIN).forward(req, resp);
+        switch (req.getServletPath()) {
+            case UrlUtil.URL_LOGIN -> req.getRequestDispatcher(JspUtil.JSP_LOGIN).forward(req, resp);
+            case UrlUtil.URL_LOGOUT -> {
+                req.getSession().invalidate();
+                resp.sendRedirect(req.getContextPath() + UrlUtil.URL_LOGIN);
+            }
+        }
     }
 
     @Override
