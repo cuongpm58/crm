@@ -10,7 +10,7 @@ public class UrlUtil {
     public static final String URL_TASK = "/api/task";
     public static final String URL_TASK_ADD = "/api/task/add";
     public static final String URL_HOME = "/api/home";
-    public static final String URL_USER = "/api/member";
+    public static final String URL_USER = "/api/user";
     public static final String URL_USER_DETAIL = "/api/user/detail";
     public static final String URL_USER_MODIFY = "/api/user/modify";
     public static final String URL_USER_DELETE = "/api/user/delete";

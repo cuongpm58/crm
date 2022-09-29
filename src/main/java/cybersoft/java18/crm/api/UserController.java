@@ -18,8 +18,6 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet(name = "user", urlPatterns = {
-//        UrlUtil.URL_USER,
-//        UrlUtil.URL_USER_ADD
         UrlUtil.URL_USER,
         UrlUtil.URL_USER_DETAIL,
         UrlUtil.URL_USER_MODIFY,
@@ -34,8 +32,7 @@ public class UserController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UserModel user = (UserModel) req.getSession().getAttribute("currentUser");
-        RoleModel role = RoleService.getInstance().getRoleByEmail(user.getEmail());
-        switch (role.getName()) {
+        switch (user.getRole().getName()) {
             case RoleUtil.ROLE_ADMIN -> showAllMember(req, resp);
             case RoleUtil.ROLE_MANAGER -> showSubordinate(req, resp);
             default -> showNothing(req, resp);
