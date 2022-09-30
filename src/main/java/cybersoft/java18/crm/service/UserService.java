@@ -52,6 +52,10 @@ public class UserService {
         return null;
     }
 
+    public UserModel getUserById(int userId) {
+        return repository.findUserById(userId);
+    }
+
     private boolean isValidUser(UserModel userModel) {
         if (userModel.getEmail() == null || "".equals(userModel.getEmail().trim()))
             return false;

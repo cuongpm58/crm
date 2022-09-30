@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @WebServlet(name = "user", urlPatterns = {
         UrlUtil.URL_USER,
@@ -31,14 +32,52 @@ public class UserController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        UserModel user = (UserModel) req.getSession().getAttribute("currentUser");
         switch (req.getServletPath()) {
-            case UrlUtil.URL_USER_PROFILE -> showUserProfile(req, resp, user);
-            default -> showUserTable(req, resp, user);
+            case UrlUtil.URL_USER_PROFILE -> showUserProfile(req, resp);
+            case UrlUtil.URL_USER_MODIFY -> showModifyUser(req, resp);
+            default -> showUserTable(req, resp);
         }
     }
 
-    private void showUserProfile(HttpServletRequest req, HttpServletResponse resp, UserModel user) throws ServletException, IOException {
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        switch (req.getServletPath()) {
+            case UrlUtil.URL_USER_ADD -> addUser(req, resp);
+            case UrlUtil.URL_USER_MODIFY -> modifyUser(req, resp);
+            default -> getUsers(req, resp);
+        }
+    }
+
+    private void showModifyUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        UserModel user = getUser(req);
+        if (user.getRole().getName().equals(RoleUtil.ROLE_ADMIN)) {
+            req.setAttribute("user", user);
+            req.setAttribute("roles", roles);
+            req.getRequestDispatcher(JspUtil.JSP_USER_MODIFY).forward(req, resp);
+        } else {
+            resp.sendRedirect(req.getContextPath() + UrlUtil.URL_BLANK);
+        }
+    }
+
+    private void modifyUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int userId = Integer.parseInt(Optional.ofNullable(req.getParameter("userId")).orElse("-1"));
+//        String roleId = req.getParameter("roleId");
+        if (userId > 0) {
+            UserService.getInstance().updateUser(UserModel.builder()
+                    .id(userId)
+                    .fullname(req.getParameter("fullname"))
+                    .email(req.getParameter("email"))
+                    .password(req.getParameter("password"))
+                    .role(roles.stream().filter(
+                                    role -> role.getId() == Integer.valueOf(req.getParameter("roleId")))
+                            .findFirst().get())
+                    .build());
+        }
+        resp.sendRedirect(req.getContextPath() + UrlUtil.URL_USER);
+    }
+
+    private void showUserProfile(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        UserModel user = getUser(req);
         List<TaskModel> tasks = TaskService.getInstance().getTaskByUserId(user.getId());
         int sumTask = tasks.size();
 
@@ -61,7 +100,8 @@ public class UserController extends HttpServlet {
         req.getRequestDispatcher(JspUtil.JSP_USER_PROFILE).forward(req, resp);
     }
 
-    private void showUserTable(HttpServletRequest req, HttpServletResponse resp, UserModel user) throws ServletException, IOException {
+    private void showUserTable(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        UserModel user = getUser(req);
         switch (user.getRole().getName()) {
             case RoleUtil.ROLE_ADMIN -> showAllMember(req, resp);
             case RoleUtil.ROLE_MANAGER -> showSubordinate(req, resp);
@@ -75,22 +115,14 @@ public class UserController extends HttpServlet {
         req.getRequestDispatcher(JspUtil.JSP_USER).forward(req, resp);
     }
 
-    private void showNothing(HttpServletRequest req, HttpServletResponse resp) {
-
+    private void showNothing(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        resp.sendRedirect(req.getContextPath() + UrlUtil.URL_BLANK);
     }
 
     private void showAllMember(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<UserModel> users = UserService.getInstance().getUsers();
         req.setAttribute("users", users);
         req.getRequestDispatcher(JspUtil.JSP_USER).forward(req, resp);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        switch (req.getServletPath()) {
-            case UrlUtil.URL_USER_ADD -> addUser(req, resp);
-            default -> getUsers(req, resp);
-        }
     }
 
     private void addUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -121,5 +153,12 @@ public class UserController extends HttpServlet {
     private void getUsers(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<UserModel> users = UserService.getInstance().getUsers();
         PrintUtil.printJsonFromObject(resp, users);
+    }
+
+    private UserModel getUser(HttpServletRequest req) {
+        int userId = Integer.parseInt(Optional.ofNullable(req.getParameter("userId")).orElse("-1"));
+        return userId < 0 ?
+                (UserModel) req.getSession().getAttribute("currentUser") :
+                UserService.getInstance().getUserById(userId);
     }
 }
