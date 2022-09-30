@@ -127,7 +127,7 @@
             <div class="container-fluid">
                 <div class="row bg-title">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">Sửa thông tin thành viên</h4>
+                        <h4 class="page-title">Add new user</h4>
                     </div>
                 </div>
                 <!-- /.row -->
@@ -141,14 +141,14 @@
                                 <div class="form-group">
                                     <label class="col-md-12">Fullname</label>
                                     <div class="col-md-12">
-                                        <input type="text" placeholder="${user.fullname}"
+                                        <input type="text" placeholder="fullname"
                                             name = "fullname" id="fullname" required
                                             class="form-control form-control-line"> </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="example-email" class="col-md-12">Email</label>
                                     <div class="col-md-12">
-                                        <input type="email" placeholder="${user.email}"
+                                        <input type="email" placeholder="mail@gmail..."
                                             class="form-control form-control-line"
                                             name = "email" id="email" required
                                             id="example-email"> </div>
@@ -156,7 +156,7 @@
                                 <div class="form-group">
                                     <label class="col-md-12">Password</label>
                                     <div class="col-md-12">
-                                        <input type="password" value="${user.password}"
+                                        <input type="password" value="1234567"
                                          name = "password" id="password" required
                                          class="form-control form-control-line">
                                     </div>
@@ -173,8 +173,8 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
-                                        <button type="submit" class="btn btn-success">Xác nhận</button>
-                                        <a href="user-table.html" class="btn btn-primary">Quay lại</a>
+                                        <button type="submit" class="btn btn-success">Submit</button>
+                                        <a href="user-table.html" class="btn btn-primary">Back</a>
                                     </div>
                                 </div>
                             </form>

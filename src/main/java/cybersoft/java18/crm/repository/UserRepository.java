@@ -146,4 +146,15 @@ public class UserRepository extends AbstractRepository<UserModel> {
                             .build();
         });
     }
+
+    public boolean deleteUser(int userId) {
+        String query = """
+                    delete from users where id = ?
+                """;
+        return executeDeleteQuery(connection -> {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, userId);
+            return statement.executeUpdate() > 0;
+        });
+    }
 }

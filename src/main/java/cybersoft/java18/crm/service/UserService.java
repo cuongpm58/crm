@@ -56,6 +56,10 @@ public class UserService {
         return repository.findUserById(userId);
     }
 
+    public boolean deleteUser(int userId) {
+        return repository.deleteUser(userId);
+    }
+
     private boolean isValidUser(UserModel userModel) {
         if (userModel.getEmail() == null || "".equals(userModel.getEmail().trim()))
             return false;
@@ -65,4 +69,5 @@ public class UserService {
 
         return userModel.getFullname() != null && !"".equals(userModel.getFullname().trim());
     }
+
 }

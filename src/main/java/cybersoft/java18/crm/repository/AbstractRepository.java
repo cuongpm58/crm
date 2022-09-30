@@ -44,4 +44,12 @@ public abstract class AbstractRepository<T> {
             throw new RuntimeException(e.getMessage());
         }
     }
+
+    public Boolean executeDeleteQuery(JdbcExecute<Boolean> processor) {
+        try (Connection connection = MySqlConnection.getConnection()) {
+            return processor.process(connection);
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
 }

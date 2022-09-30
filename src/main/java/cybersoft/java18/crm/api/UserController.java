@@ -35,8 +35,19 @@ public class UserController extends HttpServlet {
         switch (req.getServletPath()) {
             case UrlUtil.URL_USER_PROFILE -> showUserProfile(req, resp);
             case UrlUtil.URL_USER_MODIFY -> showModifyUser(req, resp);
+            case UrlUtil.URL_USER_DELETE -> deleteUser(req, resp);
+            case UrlUtil.URL_USER_ADD -> showAddUser(req, resp);
             default -> showUserTable(req, resp);
         }
+    }
+
+    private void deleteUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        UserModel user = getUser(req);
+//        UserService.getInstance().deleteUser(user.getId());
+//        resp.sendRedirect(req.getContextPath() + UrlUtil.URL_USER);
+//        resp.setHeader("REFRESH", "0");
+        req.getRequestDispatcher(JspUtil.JSP_USER).forward(req, resp);
+//        showUserTable(req, resp);
     }
 
     @Override
@@ -44,6 +55,7 @@ public class UserController extends HttpServlet {
         switch (req.getServletPath()) {
             case UrlUtil.URL_USER_ADD -> addUser(req, resp);
             case UrlUtil.URL_USER_MODIFY -> modifyUser(req, resp);
+//            case UrlUtil.URL_USER_DELETE -> deleteUser(req, resp);
             default -> getUsers(req, resp);
         }
     }
@@ -109,6 +121,11 @@ public class UserController extends HttpServlet {
         }
     }
 
+    private void showAddUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("roles", roles);
+        req.getRequestDispatcher(JspUtil.JSP_USER_ADD).forward(req, resp);
+    }
+
     private void showSubordinate(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<UserModel> users = UserService.getInstance().getUsers();
         req.setAttribute("users", users);
@@ -135,7 +152,7 @@ public class UserController extends HttpServlet {
                 .build();
 
         boolean isSuccess = UserService.getInstance().addNewUser(newUser);
-        PrintUtil.printJsonFromObject(resp, isSuccess);
+        resp.sendRedirect(req.getContextPath() + UrlUtil.URL_USER);
     }
 
     private void updateUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

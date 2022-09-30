@@ -14,4 +14,5 @@ public class JspUtil {
     public static final String JSP_ERROR = "/WEB-INF/views/error/error.jsp";
     public static final String JSP_USER_PROFILE = "/WEB-INF/views/user/profile.jsp";
     public static final String JSP_USER_MODIFY = "/WEB-INF/views/user/user-modify.jsp";
+    public static final String JSP_USER_ADD = "/WEB-INF/views/user/user-add.jsp";
 }
