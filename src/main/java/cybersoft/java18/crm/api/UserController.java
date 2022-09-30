@@ -42,12 +42,11 @@ public class UserController extends HttpServlet {
     }
 
     private void deleteUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        UserModel user = getUser(req);
-//        UserService.getInstance().deleteUser(user.getId());
-//        resp.sendRedirect(req.getContextPath() + UrlUtil.URL_USER);
+        UserModel user = getUser(req);
+        UserService.getInstance().deleteUser(user.getId());
+        resp.sendRedirect(req.getContextPath() + UrlUtil.URL_USER);
 //        resp.setHeader("REFRESH", "0");
-        req.getRequestDispatcher(JspUtil.JSP_USER).forward(req, resp);
-//        showUserTable(req, resp);
+//        req.getRequestDispatcher(JspUtil.JSP_USER).forward(req, resp);
     }
 
     @Override

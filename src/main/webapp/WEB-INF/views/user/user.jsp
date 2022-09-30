@@ -205,14 +205,16 @@
 
         function showConfirmDialog(role, userId) {
             var adminRole = "${RoleUtil.ROLE_ADMIN}"
-            console.log("${pageContext.request.contextPath}${UrlUtil.URL_USER_DELETE}?userId=1")
+            console.log("${pageContext.request.contextPath}${UrlUtil.URL_USER_DELETE}?userId="+userId)
             if(role === adminRole) {
                 if(confirm("Do you want to delete this user") == true) {
                     console.log('OK')
                      $.ajax({
                          url: "${pageContext.request.contextPath}${UrlUtil.URL_USER_DELETE}?userId="+userId,
                          type: 'get',
-                         dataType: 'json',
+                         success: function() {
+                            window.location.reload()
+                         }
                      })
                 } else {
                     console.log('Cancel')
