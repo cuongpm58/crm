@@ -43,4 +43,8 @@ public class JobService {
     public boolean updateJob(JobModel job) {
         return repository.updateJob(job);
     }
+
+    public List<JobModel> getJobByUser(int userId) {
+        return repository.findJobByUserId(userId);
+    }
 }

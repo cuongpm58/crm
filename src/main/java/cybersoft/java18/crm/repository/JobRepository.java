@@ -94,4 +94,27 @@ public class JobRepository extends AbstractRepository<JobModel> {
             return statement.executeUpdate();
         }) != 0;
     }
+
+    public List<JobModel> findJobByUserId(int userId) {
+        String query = """
+                    select * from jobs j
+                    inner join users u on u.id = j.id
+                     where u.id = ?
+                """;
+        return executeQuery(connection -> {
+            List<JobModel> jobs = new ArrayList<>();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, userId);
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+                jobs.add(JobModel.builder()
+                        .id(result.getInt("id"))
+                        .name(result.getString("name"))
+                        .startTime(result.getDate("start_date").toLocalDate().atStartOfDay())
+                        .endTime(result.getDate("end_date").toLocalDate().atStartOfDay())
+                        .build());
+            }
+            return jobs;
+        });
+    }
 }

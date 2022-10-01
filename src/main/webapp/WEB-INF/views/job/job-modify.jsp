@@ -167,8 +167,8 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
-                                        <button type="submit" class="btn btn-success">Save</button>
-                                        <a href="<%=request.getContextPath() + UrlUtil.URL_JOB %>" class="btn btn-primary">Back</a>
+                                        <button type="submit" class="btn btn-success">Lưu lại</button>
+                                        <a href="<%=request.getContextPath() + UrlUtil.URL_JOB %>" class="btn btn-primary">Quay lại</a>
                                     </div>
                                 </div>
                             </form>

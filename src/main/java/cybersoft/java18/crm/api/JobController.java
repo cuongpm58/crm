@@ -49,8 +49,11 @@ public class JobController extends HttpServlet {
         resp.sendRedirect(req.getContextPath() + UrlUtil.URL_BLANK);
     }
 
-    private void showManagedJob(HttpServletRequest req, HttpServletResponse resp) {
-
+    private void showManagedJob(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        UserModel user = getUser(req);
+        List<JobModel> jobs = JobService.getInstance().getJobByUser(user.getId());
+        req.setAttribute("jobs", jobs);
+        req.getRequestDispatcher(JspUtil.JSP_JOB).forward(req, resp);
     }
 
     private void showAllJob(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -103,9 +106,9 @@ public class JobController extends HttpServlet {
     private void showModifyJob(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UserModel user = getUser(req);
         JobModel job = getJob(req);
-        if (user.getRole().getName().equals(RoleUtil.ROLE_ADMIN)
-                || user.getRole().getName().equals(RoleUtil.ROLE_MANAGER)
-                || job != null) {
+        if ((user.getRole().getName().equals(RoleUtil.ROLE_ADMIN)
+                || user.getRole().getName().equals(RoleUtil.ROLE_MANAGER))
+                && job != null) {
             req.setAttribute("job", job);
             req.getRequestDispatcher(JspUtil.JSP_JOB_MODIFY).forward(req, resp);
         } else {

@@ -173,8 +173,8 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
-                                        <button type="submit" class="btn btn-success">Save</button>
-                                        <a href="user-table.html" class="btn btn-primary">Back</a>
+                                        <button type="submit" class="btn btn-success">Lưu lại</button>
+                                        <a href="user-table.html" class="btn btn-primary">Quay lại</a>
                                     </div>
                                 </div>
                             </form>

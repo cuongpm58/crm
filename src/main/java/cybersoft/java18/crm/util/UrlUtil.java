@@ -13,6 +13,8 @@ public class UrlUtil {
     public static final String URL_JOB_DETAIL = "/api/job/detail";
     public static final String URL_TASK = "/api/task";
     public static final String URL_TASK_ADD = "/api/task/add";
+    public static final String URL_TASK_MODIFY = "/api/task/modify";
+    public static final String URL_TASK_DELETE = "/api/task/delete";
     public static final String URL_HOME = "/api/home";
     public static final String URL_USER = "/api/user";
     public static final String URL_USER_DETAIL = "/api/user/detail";

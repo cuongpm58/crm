@@ -1,6 +1,5 @@
 package cybersoft.java18.crm.model;
 
-import com.google.gson.annotations.Expose;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -8,7 +7,7 @@ import java.time.LocalDateTime;
 @Getter
 @Builder
 public class TaskModel {
-    @Expose
+    private transient int id;
     private String name;
     private LocalDateTime startTime;
     private LocalDateTime endTime;

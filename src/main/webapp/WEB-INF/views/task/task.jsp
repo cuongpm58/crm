@@ -3,6 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page isELIgnored="false" %>
 <%@ page import="cybersoft.java18.crm.util.UrlUtil" %>
+<%@ page import="cybersoft.java18.crm.util.RoleUtil" %>
+<%@ page import="cybersoft.java18.crm.model.UserModel" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -132,7 +134,7 @@
                         <h4 class="page-title">Danh sách công việc</h4>
                     </div>
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12 text-right">
-                        <a href="task-add.html" class="btn btn-sm btn-success">Thêm mới</a>
+                        <a href="<%=request.getContextPath() + UrlUtil.URL_TASK_ADD %>" class="btn btn-sm btn-success">Add task</a>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>
@@ -165,9 +167,8 @@
                                                  <td>${task.endTime}</td>
                                                  <td>${task.statusName}</td>
                                                  <td>
-                                                     <a href="#" class="btn btn-sm btn-primary">Sửa</a>
-                                                     <a href="#" class="btn btn-sm btn-danger">Xóa</a>
-                                                     <a href="user-details.html" class="btn btn-sm btn-info">Xem</a>
+                                                     <a href="<%=request.getContextPath() + UrlUtil.URL_TASK_MODIFY %>?taskId=${task.id}" class="btn btn-sm btn-primary">Sửa</a>
+                                                     <a onClick="showConfirmDialog('${sessionScope.currentUser.role.name}', '${task.id}')" class="btn btn-sm btn-danger">Xóa</a>
                                                  </td>
                                              </tr>
                                         </c:forEach>
@@ -202,6 +203,26 @@
         $(document).ready(function () {
             $('#example').DataTable();
         });
+
+        function showConfirmDialog(role, taskId) {
+            var adminRole = "${RoleUtil.ROLE_ADMIN}"
+            console.log("${pageContext.request.contextPath}${UrlUtil.URL_TASK_DELETE }?taskId="+taskId)
+            if(role === adminRole) {
+                if(confirm("Do you want to delete this task") == true) {
+                    console.log('OK')
+                     $.ajax({
+                         url: "${pageContext.request.contextPath}${UrlUtil.URL_TASK_DELETE}?taskId="+taskId,
+                         type: 'get',
+                         success: function() {
+                            window.location.reload()
+                         }
+                     })
+                } else {
+                    console.log('Cancel')
+                }
+            } else {
+            }
+        }
     </script>
 </body>
 

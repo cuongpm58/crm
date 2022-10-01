@@ -41,51 +41,53 @@
     <div id="wrapper">
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top m-b-0">
-                <div class="navbar-header">
-                    <a class="navbar-toggle hidden-sm hidden-md hidden-lg " href="javascript:void(0)" data-toggle="collapse" data-target=".navbar-collapse">
-                        <i class="fa fa-bars"></i>
+            <div class="navbar-header">
+                <a class="navbar-toggle hidden-sm hidden-md hidden-lg " href="javascript:void(0)" data-toggle="collapse"
+                    data-target=".navbar-collapse">
+                    <i class="fa fa-bars"></i>
+                </a>
+                <div class="top-left-part">
+                    <a class="logo" href="index.html">
+                        <b>
+                            <img src="${pageContext.request.contextPath}/resources/plugins/images/pixeladmin-logo.png" alt="home" />
+                        </b>
+                        <span class="hidden-xs">
+                            <img src="${pageContext.request.contextPath}/resources/plugins/images/pixeladmin-text.png" alt="home" />
+                        </span>
                     </a>
-                    <div class="top-left-part">
-                        <a class="logo" href="index.html">
-                            <b>
-                                <img src="${pageContext.request.contextPath}/resources/plugins/images/pixeladmin-logo.png" alt="home" />
-                            </b>
-                            <span class="hidden-xs">
-                                <img src="${pageContext.request.contextPath}/resources/plugins/images/pixeladmin-text.png" alt="home" />
-                            </span>
-                        </a>
-                    </div>
-                    <ul class="nav navbar-top-links navbar-left m-l-20 hidden-xs">
-                        <li>
-                            <form role="search" class="app-search hidden-xs">
-                                <input type="text" placeholder="Search..." class="form-control">
-                                <a href="">
-                                    <i class="${pageContext.request.contextPath}/resources/fa fa-search"></i>
-                                </a>
-                            </form>
-                        </li>
-                    </ul>
-                    <ul class="nav navbar-top-links navbar-right pull-right">
-                        <li>
-                            <div class="dropdown">
-                                <a class="profile-pic dropdown-toggle" data-toggle="dropdown" href="#">
-                                    <img src="${pageContext.request.contextPath}/resources/plugins/images/users/varun.jpg" alt="user-img" width="36" class="img-circle" />
-                                    <b class="hidden-xs">${sessionScope.currentUser.fullname}</b>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="<%=request.getContextPath() + UrlUtil.URL_USER_PROFILE %>">Thông tin cá nhân</a></li>
-                                    <li><a href="#">Thống kê công việc</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="<%=request.getContextPath() + UrlUtil.URL_LOGOUT %>">Đăng xuất</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                    </ul>
                 </div>
-                <!-- /.navbar-header -->
-                <!-- /.navbar-top-links -->
-                <!-- /.navbar-static-side -->
-            </nav>
+                <ul class="nav navbar-top-links navbar-left m-l-20 hidden-xs">
+                    <li>
+                        <form role="search" class="app-search hidden-xs">
+                            <input type="text" placeholder="Search..." class="form-control">
+                            <a href="">
+                                <i class="fa fa-search"></i>
+                            </a>
+                        </form>
+                    </li>
+                </ul>
+                <ul class="nav navbar-top-links navbar-right pull-right">
+                    <li>
+                        <div class="dropdown">
+                            <a class="profile-pic dropdown-toggle" data-toggle="dropdown" href="#">
+                                <img src="${pageContext.request.contextPath}/resources/plugins/images/users/varun.jpg" alt="user-img" width="36"
+                                    class="img-circle" />
+                                <b class="hidden-xs">${sessionScope.currentUser.fullname}</b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="<%=request.getContextPath() + UrlUtil.URL_USER_PROFILE %>">Thông tin cá nhân</a></li>
+                                <li><a href="#">Thống kê công việc</a></li>
+                                <li class="divider"></li>
+                                <li><a href="<%=request.getContextPath() + UrlUtil.URL_LOGOUT %>">Đăng xuất</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-header -->
+            <!-- /.navbar-top-links -->
+            <!-- /.navbar-static-side -->
+        </nav>
         <!-- Left navbar-header -->
         <div class="navbar-default sidebar" role="navigation">
             <div class="sidebar-nav navbar-collapse slimscrollsidebar">
@@ -127,7 +129,7 @@
             <div class="container-fluid">
                 <div class="row bg-title">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">Thêm mới dự án</h4>
+                        <h4 class="page-title">Thêm mới công việc</h4>
                     </div>
                 </div>
                 <!-- /.row -->
@@ -136,33 +138,52 @@
                     <div class="col-md-2 col-12"></div>
                     <div class="col-md-8 col-xs-12">
                         <div class="white-box">
-                            <form class="form-horizontal form-material"
-                                action="<%=request.getContextPath() + UrlUtil.URL_JOB_ADD %>" method="post">
+                            <form class="form-horizontal form-material" action="<%=request.getContextPath() + UrlUtil.URL_TASK_ADD %>" method="post">
                                 <div class="form-group">
-                                    <label class="col-md-12">Tên dự án</label>
+                                    <label class="col-md-12">Dự án</label>
                                     <div class="col-md-12">
-                                        <input type="text" placeholder="Tên công việc"
-                                            name = "name" id="name" required
-                                            class="form-control form-control-line"> </div>
+                                        <select class="form-control form-control-line" name="jobId" id="jobId">
+                                             <c:forEach var="job" items="${jobs}" varStatus="loop">
+                                                <option value="${job.id}">${job.name}</option>
+                                             </c:forEach>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">Tên công việc</label>
+                                    <div class="col-md-12">
+                                        <input type="text" placeholder="Tên công việc" id="name" name="name"
+                                            class="form-control form-control-line">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">Người thực hiện</label>
+                                    <div class="col-md-12">
+                                        <select class="form-control form-control-line" id="userId" name="userId">
+                                            <c:forEach var="user" items="${users}" varStatus="loop">
+                                               <option value="${user.id}">${user.fullname}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Ngày bắt đầu</label>
                                     <div class="col-md-12">
-                                        <input type="date" placeholder="dd/MM/yyyy"
-                                            name = "startTime" id="startTime" required
-                                            class="form-control form-control-line"> </div>
+                                        <input type="date" placeholder="dd/MM/yyyy" name = "startTime" id="startTime"
+                                            class="form-control form-control-line">
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Ngày kết thúc</label>
                                     <div class="col-md-12">
-                                        <input type="date" placeholder="dd/MM/yyyy"
-                                            name = "endTime" id="endTime" required
-                                            class="form-control form-control-line"> </div>
+                                        <input type="date" placeholder="dd/MM/yyyy" name = "endTime" id="endTime"
+                                            class="form-control form-control-line">
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <button type="submit" class="btn btn-success">Lưu lại</button>
-                                        <a href="<%=request.getContextPath() + UrlUtil.URL_JOB %>" class="btn btn-primary">Quay lại</a>
+                                        <a href="<%=request.getContextPath() + UrlUtil.URL_TASK %>" class="btn btn-primary">Quay lại</a>
                                     </div>
                                 </div>
                             </form>
@@ -191,5 +212,7 @@
     <!-- Custom Theme JavaScript -->
     <script src="${pageContext.request.contextPath}/resources/js/custom.min.js"></script>
 </body>
+
+
 
 </html>

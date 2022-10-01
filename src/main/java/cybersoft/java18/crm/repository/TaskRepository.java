@@ -11,7 +11,7 @@ import java.util.List;
 public class TaskRepository extends AbstractRepository<TaskModel> {
     public List<TaskModel> findAll() {
         String query = """
-                select t.name, t.start_date, t.end_date, s.name, u.fullname, j.name from tasks t\s
+                select t.id, t.name, t.start_date, t.end_date, s.name, u.fullname, j.name from tasks t\s
                 inner join status s on t.status_id = s.id
                 inner join users u on t.user_id = u.id
                 inner join jobs j on t.job_id = j.id
@@ -22,6 +22,7 @@ public class TaskRepository extends AbstractRepository<TaskModel> {
             ResultSet results = statement.executeQuery();
             while (results.next()) {
                 tasks.add(TaskModel.builder()
+                        .id(results.getInt("t.id"))
                         .name(results.getString("name"))
                         .startTime(results.getDate("start_date").toLocalDate().atStartOfDay())
                         .endTime(results.getDate("end_date").toLocalDate().atStartOfDay())
@@ -43,7 +44,7 @@ public class TaskRepository extends AbstractRepository<TaskModel> {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, newTask.getName());
             statement.setDate(2, Date.valueOf(newTask.getStartTime().toLocalDate()));
-            statement.setDate(3, Date.valueOf(newTask.getStartTime().toLocalDate()));
+            statement.setDate(3, Date.valueOf(newTask.getEndTime().toLocalDate()));
             statement.setInt(4, newTask.getUserId());
             statement.setInt(5, newTask.getJobId());
             statement.setInt(6, newTask.getStatusId());
@@ -51,9 +52,33 @@ public class TaskRepository extends AbstractRepository<TaskModel> {
         }) != 0;
     }
 
+    public boolean update(TaskModel task) {
+        String query = """
+                    update tasks set 
+                    name = ?,
+                    start_date = ?,
+                    end_date = ?,
+                    user_id = ?,
+                    job_id = ?,
+                    status_id = ?
+                    where id = ?
+                """;
+        return excuteSaveAndUpdate(connection -> {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, task.getName());
+            statement.setDate(2, Date.valueOf(task.getStartTime().toLocalDate()));
+            statement.setDate(3, Date.valueOf(task.getEndTime().toLocalDate()));
+            statement.setInt(4, task.getUserId());
+            statement.setInt(5, task.getJobId());
+            statement.setInt(6, task.getStatusId());
+            statement.setInt(7, task.getId());
+            return statement.executeUpdate();
+        }) != 0;
+    }
+
     public List<TaskModel> findTaskByUserIdStatusId(int userId, int statusId) {
         String query = """
-                    select t.name, t.start_date, t.end_date, s.name, u.fullname, j.name from tasks t
+                    select t.id, t.name, t.start_date, t.end_date, s.name, u.fullname, j.name from tasks t
                     inner join status s on t.status_id = s.id
                     inner join users u on t.user_id = u.id
                     inner join jobs j on t.job_id = j.id
@@ -67,6 +92,7 @@ public class TaskRepository extends AbstractRepository<TaskModel> {
             ResultSet results = statement.executeQuery();
             while (results.next()) {
                 tasks.add(TaskModel.builder()
+                        .id(results.getInt("id"))
                         .name(results.getString("name"))
                         .startTime(results.getDate("start_date").toLocalDate().atStartOfDay())
                         .startTime(results.getDate("end_date").toLocalDate().atStartOfDay())
@@ -78,7 +104,7 @@ public class TaskRepository extends AbstractRepository<TaskModel> {
 
     public List<TaskModel> findTaskByUserId(int userId) {
         String query = """
-                    select t.name, t.start_date, t.end_date, s.name, u.fullname, j.name from tasks t
+                    select t.id, t.name, t.start_date, t.end_date, s.name, u.fullname, j.name from tasks t
                     inner join status s on t.status_id = s.id
                     inner join users u on t.user_id = u.id
                     inner join jobs j on t.job_id = j.id
@@ -91,6 +117,7 @@ public class TaskRepository extends AbstractRepository<TaskModel> {
             ResultSet results = statement.executeQuery();
             while (results.next()) {
                 tasks.add(TaskModel.builder()
+                        .id(results.getInt("t.id"))
                         .name(results.getString("name"))
                         .startTime(results.getDate("start_date").toLocalDate().atStartOfDay())
                         .endTime(results.getDate("end_date").toLocalDate().atStartOfDay())
@@ -105,7 +132,7 @@ public class TaskRepository extends AbstractRepository<TaskModel> {
 
     public List<TaskModel> findTaskByJobId(int jobId) {
         String query = """
-                    select t.name, t.start_date, t.end_date, s.name, u.fullname, j.name from tasks t
+                    select t.id, t.name, t.start_date, t.end_date, s.name, u.fullname, j.name from tasks t
                     inner join status s on t.status_id = s.id
                     inner join users u on t.user_id = u.id
                     inner join jobs j on t.job_id = j.id
@@ -118,6 +145,7 @@ public class TaskRepository extends AbstractRepository<TaskModel> {
             ResultSet results = statement.executeQuery();
             while (results.next()) {
                 tasks.add(TaskModel.builder()
+                        .id(results.getInt("t.id"))
                         .name(results.getString("name"))
                         .startTime(results.getDate("start_date").toLocalDate().atStartOfDay())
                         .endTime(results.getDate("end_date").toLocalDate().atStartOfDay())
@@ -127,6 +155,45 @@ public class TaskRepository extends AbstractRepository<TaskModel> {
                         .build());
             }
             return tasks;
+        });
+    }
+
+    public boolean deleteTaskById(int taskId) {
+        String query = """
+                    delete from tasks where id = ?
+                """;
+        return executeDeleteQuery(connection -> {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, taskId
+            );
+            return statement.executeUpdate() > 0;
+        });
+    }
+
+    public TaskModel findTaskById(int taskId) {
+        String query = """
+                    select t.id, t.name, t.start_date, t.end_date, s.name, u.fullname, j.name from tasks t
+                    inner join status s on t.status_id = s.id
+                    inner join users u on t.user_id = u.id
+                    inner join jobs j on t.job_id = j.id
+                    where t.id = ?
+                """;
+        return executeQuerySingle(connection -> {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, taskId);
+            ResultSet result = statement.executeQuery();
+            if (result.next()) {
+                return TaskModel.builder()
+                        .id(result.getInt("t.id"))
+                        .name(result.getString("name"))
+                        .startTime(result.getDate("start_date").toLocalDate().atStartOfDay())
+                        .endTime(result.getDate("end_date").toLocalDate().atStartOfDay())
+                        .statusName(result.getString("s.name"))
+                        .personInCharge(result.getString("u.fullname"))
+                        .jobName(result.getString("j.name"))
+                        .build();
+            }
+            return null;
         });
     }
 }

@@ -35,4 +35,16 @@ public class TaskService {
     public List<TaskModel> getTaskByJobId(int jobId) {
         return repository.findTaskByJobId(jobId);
     }
+
+    public boolean deleteTaskById(int taskId) {
+        return repository.deleteTaskById(taskId);
+    }
+
+    public TaskModel getTaskById(int taskId) {
+        return repository.findTaskById(taskId);
+    }
+
+    public boolean updateTask(TaskModel task) {
+        return repository.update(task);
+    }
 }

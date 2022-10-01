@@ -13,6 +13,8 @@ public class JspUtil {
     public static final String JSP_JOB_MODIFY = "/WEB-INF/views/job/job-modify.jsp";
     public static final String JSP_JOB_DETAIL = "/WEB-INF/views/job/job-detail.jsp";
     public static final String JSP_TASK = "/WEB-INF/views/task/task.jsp";
+    public static final String JSP_TASK_ADD = "/WEB-INF/views/task/task-add.jsp";
+    public static final String JSP_TASK_MODIFY = "/WEB-INF/views/task/task-modify.jsp";
     public static final String JSP_BLANK = "/WEB-INF/views/error/blank.jsp";
     public static final String JSP_ERROR = "/WEB-INF/views/error/error.jsp";
     public static final String JSP_USER_PROFILE = "/WEB-INF/views/user/profile.jsp";
