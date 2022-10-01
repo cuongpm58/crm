@@ -8,6 +8,9 @@ public class UrlUtil {
     public static final String URL_STATUS = "/api/status";
     public static final String URL_JOB = "/api/job";
     public static final String URL_JOB_ADD = "/api/job/add";
+    public static final String URL_JOB_DELETE = "/api/job/delete";
+    public static final String URL_JOB_MODIFY = "/api/job/modify";
+    public static final String URL_JOB_DETAIL = "/api/job/detail";
     public static final String URL_TASK = "/api/task";
     public static final String URL_TASK_ADD = "/api/task/add";
     public static final String URL_HOME = "/api/home";

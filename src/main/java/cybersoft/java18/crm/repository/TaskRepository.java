@@ -102,4 +102,31 @@ public class TaskRepository extends AbstractRepository<TaskModel> {
             return tasks;
         });
     }
+
+    public List<TaskModel> findTaskByJobId(int jobId) {
+        String query = """
+                    select t.name, t.start_date, t.end_date, s.name, u.fullname, j.name from tasks t
+                    inner join status s on t.status_id = s.id
+                    inner join users u on t.user_id = u.id
+                    inner join jobs j on t.job_id = j.id
+                    where job_id = ?
+                """;
+        return executeQuery(connection -> {
+            List<TaskModel> tasks = new ArrayList<>();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, jobId);
+            ResultSet results = statement.executeQuery();
+            while (results.next()) {
+                tasks.add(TaskModel.builder()
+                        .name(results.getString("name"))
+                        .startTime(results.getDate("start_date").toLocalDate().atStartOfDay())
+                        .endTime(results.getDate("end_date").toLocalDate().atStartOfDay())
+                        .statusName(results.getString("s.name"))
+                        .personInCharge(results.getString("u.fullname"))
+                        .jobName(results.getString("j.name"))
+                        .build());
+            }
+            return tasks;
+        });
+    }
 }

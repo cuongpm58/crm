@@ -1,7 +1,13 @@
 package cybersoft.java18.crm.api;
 
-import cybersoft.java18.crm.model.*;
-import cybersoft.java18.crm.service.*;
+import cybersoft.java18.crm.model.RoleModel;
+import cybersoft.java18.crm.model.StatusModel;
+import cybersoft.java18.crm.model.TaskModel;
+import cybersoft.java18.crm.model.UserModel;
+import cybersoft.java18.crm.service.RoleService;
+import cybersoft.java18.crm.service.StatusService;
+import cybersoft.java18.crm.service.TaskService;
+import cybersoft.java18.crm.service.UserService;
 import cybersoft.java18.crm.util.JspUtil;
 import cybersoft.java18.crm.util.PrintUtil;
 import cybersoft.java18.crm.util.RoleUtil;
@@ -41,14 +47,6 @@ public class UserController extends HttpServlet {
         }
     }
 
-    private void deleteUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        UserModel user = getUser(req);
-        UserService.getInstance().deleteUser(user.getId());
-        resp.sendRedirect(req.getContextPath() + UrlUtil.URL_USER);
-//        resp.setHeader("REFRESH", "0");
-//        req.getRequestDispatcher(JspUtil.JSP_USER).forward(req, resp);
-    }
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         switch (req.getServletPath()) {
@@ -58,6 +56,13 @@ public class UserController extends HttpServlet {
             default -> getUsers(req, resp);
         }
     }
+
+    private void deleteUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        UserModel user = getUser(req);
+        UserService.getInstance().deleteUser(user.getId());
+        resp.sendRedirect(req.getContextPath() + UrlUtil.URL_USER);
+    }
+
 
     private void showModifyUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UserModel user = getUser(req);
@@ -72,7 +77,6 @@ public class UserController extends HttpServlet {
 
     private void modifyUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int userId = Integer.parseInt(Optional.ofNullable(req.getParameter("userId")).orElse("-1"));
-//        String roleId = req.getParameter("roleId");
         if (userId > 0) {
             UserService.getInstance().updateUser(UserModel.builder()
                     .id(userId)

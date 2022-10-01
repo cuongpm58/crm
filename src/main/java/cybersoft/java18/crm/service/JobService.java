@@ -1,9 +1,7 @@
 package cybersoft.java18.crm.service;
 
 import cybersoft.java18.crm.model.JobModel;
-import cybersoft.java18.crm.model.UserModel;
 import cybersoft.java18.crm.repository.JobRepository;
-import cybersoft.java18.crm.repository.UserRepository;
 
 import java.util.List;
 
@@ -32,5 +30,17 @@ public class JobService {
 
     private boolean isValidJob(JobModel jobModel) {
         return jobModel.getName() != null && !"".equals(jobModel.getName().trim());
+    }
+
+    public boolean deleteJobById(int jobId) {
+        return repository.deleteJobById(jobId);
+    }
+
+    public JobModel getJobById(int jobId) {
+        return repository.findJobById(jobId);
+    }
+
+    public boolean updateJob(JobModel job) {
+        return repository.updateJob(job);
     }
 }

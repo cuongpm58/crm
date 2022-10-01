@@ -3,8 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page isELIgnored="false" %>
 <%@ page import="cybersoft.java18.crm.util.UrlUtil" %>
-<%@ page import="cybersoft.java18.crm.util.RoleUtil" %>
-<%@ page import="cybersoft.java18.crm.model.UserModel" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -21,14 +19,12 @@
     <link href="${pageContext.request.contextPath}/resources/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Menu CSS -->
     <link href="${pageContext.request.contextPath}/resources/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     <!-- animation CSS -->
     <link href="${pageContext.request.contextPath}/resources/css/animate.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet">
     <!-- color CSS -->
     <link href="${pageContext.request.contextPath}/resources/css/colors/blue-dark.css" id="theme" rel="stylesheet">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/custom.css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -45,7 +41,7 @@
     <div id="wrapper">
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top m-b-0">
-                <div class="navbar-header"> 
+                <div class="navbar-header">
                     <a class="navbar-toggle hidden-sm hidden-md hidden-lg " href="javascript:void(0)" data-toggle="collapse" data-target=".navbar-collapse">
                         <i class="fa fa-bars"></i>
                     </a>
@@ -62,9 +58,9 @@
                     <ul class="nav navbar-top-links navbar-left m-l-20 hidden-xs">
                         <li>
                             <form role="search" class="app-search hidden-xs">
-                                <input type="text" placeholder="Search..." class="form-control"> 
+                                <input type="text" placeholder="Search..." class="form-control">
                                 <a href="">
-                                    <i class="fa fa-search"></i>
+                                    <i class="${pageContext.request.contextPath}/resources/fa fa-search"></i>
                                 </a>
                             </form>
                         </li>
@@ -72,7 +68,7 @@
                     <ul class="nav navbar-top-links navbar-right pull-right">
                         <li>
                             <div class="dropdown">
-                                <a class="profile-pic dropdown-toggle" data-toggle="dropdown" href="#"> 
+                                <a class="profile-pic dropdown-toggle" data-toggle="dropdown" href="#">
                                     <img src="${pageContext.request.contextPath}/resources/plugins/images/users/varun.jpg" alt="user-img" width="36" class="img-circle" />
                                     <b class="hidden-xs">${sessionScope.currentUser.fullname}</b>
                                 </a>
@@ -131,47 +127,48 @@
             <div class="container-fluid">
                 <div class="row bg-title">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">Danh sách dự án</h4>
+                        <h4 class="page-title">Thêm mới dự án</h4>
                     </div>
-                    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12 text-right">
-                        <a href="<%=request.getContextPath() + UrlUtil.URL_JOB_ADD %>" class="btn btn-sm btn-success">Add job</a>
-                    </div>
-                    <!-- /.col-lg-12 -->
                 </div>
-                <!-- /row -->
+                <!-- /.row -->
+                <!-- .row -->
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col-md-2 col-12"></div>
+                    <div class="col-md-8 col-xs-12">
                         <div class="white-box">
-                            <div class="table-responsive">
-                                <table class="table" id="example">
-                                    <thead>
-                                        <tr>
-                                            <th>STT</th>
-                                            <th>Tên Dự Án</th>
-                                            <th>Ngày Bắt Đầu</th>
-                                            <th>Ngày Kết Thúc</th>
-                                            <th>Hành Động</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <c:forEach var="job" items="${jobs}" varStatus="loop">
-                                             <tr>
-                                                 <td>${loop.index + 1}</td>
-                                                 <td>${job.name}</td>
-                                                 <td>${job.startTime}</td>
-                                                 <td>${job.endTime}</td>
-                                                 <td>
-                                                     <a href="<%=request.getContextPath() + UrlUtil.URL_JOB_MODIFY %>?jobId=${job.id}" class="btn btn-sm btn-primary">Sửa</a>
-                                                     <a onClick="showConfirmDialog('${sessionScope.currentUser.role.name}', '${job.id}')" class="btn btn-sm btn-danger">Xóa</a>
-                                                     <a href="<%=request.getContextPath() + UrlUtil.URL_JOB_DETAIL %>?jobId=${job.id}" class="btn btn-sm btn-info">Xem</a>
-                                                 </td>
-                                             </tr>
-                                         </c:forEach>
-                                    </tbody>
-                                </table>
-                            </div>
+                            <form class="form-horizontal form-material"
+                                action="<%=request.getContextPath() + UrlUtil.URL_JOB_ADD %>" method="post">
+                                <div class="form-group">
+                                    <label class="col-md-12">Tên dự án</label>
+                                    <div class="col-md-12">
+                                        <input type="text" placeholder="Tên công việc"
+                                            name = "name" id="name" required
+                                            class="form-control form-control-line"> </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">Ngày bắt đầu</label>
+                                    <div class="col-md-12">
+                                        <input type="date" placeholder="dd/MM/yyyy"
+                                            name = "startTime" id="startTime" required
+                                            class="form-control form-control-line"> </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">Ngày kết thúc</label>
+                                    <div class="col-md-12">
+                                        <input type="date" placeholder="dd/MM/yyyy"
+                                            name = "endTime" id="endTime" required
+                                            class="form-control form-control-line"> </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <button type="submit" class="btn btn-success">Save</button>
+                                        <a href="<%=request.getContextPath() + UrlUtil.URL_JOB %>" class="btn btn-primary">Back</a>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
+                    <div class="col-md-2 col-12"></div>
                 </div>
                 <!-- /.row -->
             </div>
@@ -189,36 +186,10 @@
     <script src="${pageContext.request.contextPath}/resources/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js"></script>
     <!--slimscroll JavaScript -->
     <script src="${pageContext.request.contextPath}/resources/js/jquery.slimscroll.js"></script>
-    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <!--Wave Effects -->
     <script src="${pageContext.request.contextPath}/resources/js/waves.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="${pageContext.request.contextPath}/resources/js/custom.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#example').DataTable();
-        });
-
-        function showConfirmDialog(role, jobId) {
-            var adminRole = "${RoleUtil.ROLE_ADMIN}"
-            console.log("${pageContext.request.contextPath}${UrlUtil.URL_JOB_DELETE }?jobId="+jobId)
-            if(role === adminRole) {
-                if(confirm("Do you want to delete this job") == true) {
-                    console.log('OK')
-                     $.ajax({
-                         url: "${pageContext.request.contextPath}${UrlUtil.URL_JOB_DELETE}?jobId="+jobId,
-                         type: 'get',
-                         success: function() {
-                            window.location.reload()
-                         }
-                     })
-                } else {
-                    console.log('Cancel')
-                }
-            } else {
-            }
-        }
-    </script>
 </body>
 
 </html>

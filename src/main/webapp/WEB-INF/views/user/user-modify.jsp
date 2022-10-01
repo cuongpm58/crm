@@ -173,7 +173,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
-                                        <button type="submit" class="btn btn-success">Submit</button>
+                                        <button type="submit" class="btn btn-success">Save</button>
                                         <a href="user-table.html" class="btn btn-primary">Back</a>
                                     </div>
                                 </div>

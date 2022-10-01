@@ -31,4 +31,8 @@ public class TaskService {
     public List<TaskModel> getTaskByUserId(int userId) {
         return repository.findTaskByUserId(userId);
     }
+
+    public List<TaskModel> getTaskByJobId(int jobId) {
+        return repository.findTaskByJobId(jobId);
+    }
 }

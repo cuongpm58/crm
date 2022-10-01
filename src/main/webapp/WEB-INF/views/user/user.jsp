@@ -4,7 +4,6 @@
 <%@ page isELIgnored="false" %>
 <%@ page import="cybersoft.java18.crm.util.UrlUtil" %>
 <%@ page import="cybersoft.java18.crm.util.RoleUtil" %>
-<%@ page import="cybersoft.java18.crm.model.UserModel" %>
 
 <!DOCTYPE html>
 <html lang="en">

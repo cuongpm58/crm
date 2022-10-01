@@ -9,6 +9,7 @@ import java.util.List;
 @Setter
 @Builder
 public class JobModel {
+    private transient int id;
     private String name;
     private LocalDateTime startTime;
     private LocalDateTime endTime;

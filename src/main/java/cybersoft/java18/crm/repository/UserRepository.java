@@ -3,12 +3,10 @@ package cybersoft.java18.crm.repository;
 import cybersoft.java18.crm.model.RoleModel;
 import cybersoft.java18.crm.model.UserModel;
 
-import javax.management.relation.Role;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class UserRepository extends AbstractRepository<UserModel> {
     public List<UserModel> findAll() {
