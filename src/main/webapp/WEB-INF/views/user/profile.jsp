@@ -237,10 +237,10 @@
                                             <th>STT</th>
                                             <th>Tên Công Việc</th>
                                             <th>Dự Án</th>
+                                            <th>Người thực hiện</th>
                                             <th>Ngày Bắt Đầu</th>
                                             <th>Ngày Kết Thúc</th>
                                             <th>Trạng Thái</th>
-                                            <th>Hành Động</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -253,7 +253,7 @@
                                                  <td>${task.startTime}</td>
                                                  <td>${task.endTime}</td>
                                                  <td>${task.statusName}</td>
-                                                 <td>
+                                                 <td style="display:none">
                                                      <a href="#" class="btn btn-sm btn-primary">Sửa</a>
                                                      <a href="#" class="btn btn-sm btn-danger">Xóa</a>
                                                      <a href="user-details.html" class="btn btn-sm btn-info">Xem</a>

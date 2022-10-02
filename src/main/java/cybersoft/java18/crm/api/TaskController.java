@@ -48,12 +48,16 @@ public class TaskController extends HttpServlet {
     }
 
 
-    private void showAssignedTask(HttpServletRequest req, HttpServletResponse resp) {
+    private void showAssignedTask(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        UserModel user = getUser(req);
+        List<TaskModel> tasks = TaskService.getInstance().getTaskByUserId(user.getId());
+        req.setAttribute("tasks", tasks);
+        req.getRequestDispatcher(JspUtil.JSP_TASK).forward(req, resp);
     }
 
     private void showManagedTask(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UserModel user = getUser(req);
-        List<TaskModel> tasks = TaskService.getInstance().getTaskByUserId(user.getId());
+        List<TaskModel> tasks = TaskService.getInstance().getTaskByManagerId(user.getId());
         req.setAttribute("tasks", tasks);
         req.getRequestDispatcher(JspUtil.JSP_TASK).forward(req, resp);
     }
@@ -87,7 +91,7 @@ public class TaskController extends HttpServlet {
     }
 
     private void showAddTask(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        UserModel user = getUser(req);
+        UserModel user = (UserModel) req.getSession().getAttribute("currentUser");
         if (user.getRole().getName().equals(RoleUtil.ROLE_ADMIN)
                 || user.getRole().getName().equals(RoleUtil.ROLE_MANAGER)
         ) {

@@ -98,8 +98,8 @@ public class JobRepository extends AbstractRepository<JobModel> {
     public List<JobModel> findJobByUserId(int userId) {
         String query = """
                     select * from jobs j
-                    inner join users u on u.id = j.id
-                     where u.id = ?
+                    inner join users u on u.id = j.id_created_user
+                     where j.id_created_user = ?
                 """;
         return executeQuery(connection -> {
             List<JobModel> jobs = new ArrayList<>();

@@ -47,4 +47,8 @@ public class TaskService {
     public boolean updateTask(TaskModel task) {
         return repository.update(task);
     }
+
+    public List<TaskModel> getTaskByManagerId(int managerId) {
+        return repository.findTaskByManagerId(managerId);
+    }
 }

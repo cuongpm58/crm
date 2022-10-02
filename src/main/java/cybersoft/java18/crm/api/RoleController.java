@@ -4,19 +4,16 @@ import com.google.gson.Gson;
 import cybersoft.java18.crm.model.RoleModel;
 import cybersoft.java18.crm.model.UserModel;
 import cybersoft.java18.crm.service.RoleService;
-import cybersoft.java18.crm.service.UserService;
 import cybersoft.java18.crm.util.JspUtil;
 import cybersoft.java18.crm.util.RoleUtil;
 import cybersoft.java18.crm.util.UrlUtil;
 
-import javax.management.relation.Role;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
 @WebServlet(name = "role",urlPatterns = {
@@ -47,7 +44,8 @@ public class RoleController extends HttpServlet {
         req.getRequestDispatcher(JspUtil.JSP_ROLE).forward(req, resp);
     }
 
-    private void showNothing(HttpServletRequest req, HttpServletResponse resp) {
+    private void showNothing(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        resp.sendRedirect(req.getContextPath() + UrlUtil.URL_BLANK);
     }
 
     @Override

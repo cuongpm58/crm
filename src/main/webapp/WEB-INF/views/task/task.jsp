@@ -166,10 +166,20 @@
                                                  <td>${task.startTime}</td>
                                                  <td>${task.endTime}</td>
                                                  <td>${task.statusName}</td>
-                                                 <td>
-                                                     <a href="<%=request.getContextPath() + UrlUtil.URL_TASK_MODIFY %>?taskId=${task.id}" class="btn btn-sm btn-primary">Sửa</a>
-                                                     <a onClick="showConfirmDialog('${sessionScope.currentUser.role.name}', '${task.id}')" class="btn btn-sm btn-danger">Xóa</a>
-                                                 </td>
+                                                 <c:choose>
+                                                    <c:when test="${sessionScope.currentUser.role.name ne RoleUtil.ROLE_MEMBER }">
+                                                        <td>
+                                                            <a href="<%=request.getContextPath() + UrlUtil.URL_TASK_MODIFY %>?taskId=${task.id}" class="btn btn-sm btn-primary">Sửa</a>
+                                                            <a onClick="showConfirmDialog('${sessionScope.currentUser.role.name}', '${task.id}')" class="btn btn-sm btn-danger">Xóa</a>
+                                                        </td>
+                                                    </c:when>
+                                                    <c:when test="${sessionScope.currentUser.role.name eq RoleUtil.ROLE_MEMBER }">
+                                                        <td style="pointer-events: none;">
+                                                            <a href="<%=request.getContextPath() + UrlUtil.URL_TASK_MODIFY %>?taskId=${task.id}" class="btn btn-sm btn-primary">Sửa</a>
+                                                            <a onClick="showConfirmDialog('${sessionScope.currentUser.role.name}', '${task.id}')" class="btn btn-sm btn-danger">Xóa</a>
+                                                        </td>
+                                                    </c:when>
+                                                 </c:choose>
                                              </tr>
                                         </c:forEach>
                                     </tbody>
