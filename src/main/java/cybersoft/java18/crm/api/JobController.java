@@ -156,7 +156,9 @@ public class JobController extends HttpServlet {
                 if (userTaskPair.containsKey(task.getPersonInCharge())) {
                     userTaskPair.get(task.getPersonInCharge()).add(task);
                 } else {
-                    userTaskPair.put(task.getPersonInCharge(), Arrays.asList(task));
+                    List<TaskModel> list = new ArrayList<>();
+                    list.add(task);
+                    userTaskPair.put(task.getPersonInCharge(), new ArrayList<>(Arrays.asList(task)));
                 }
             });
             userTaskPair.forEach((user,list)->{
